@@ -806,7 +806,8 @@ function AppProvider({ children }) {
   });
 
   const login = (email, name) => {
-    const isAdmin = email === 'admin@lek.co' || email.includes('admin');
+    const e = (email || '').toLowerCase();
+    const isAdmin = e.includes('admin') || e === 'lek@lek.co';
     setUser({ email, name: name || email.split("@")[0], role: isAdmin ? 'admin' : 'user' });
   };
   const logout = () => setUser(null);
@@ -865,11 +866,23 @@ function Nav({ route, setRoute }) {
           onClick: () => go(l.id)
         }, l.label))
       ),
-      h('div', { style: { display: 'flex', alignItems: 'center', gap: 16 } },
+      h('div', { style: { display: 'flex', alignItems: 'center', gap: 12 } },
         user
-          ? h('div', { className: 'hide-on-mobile', style: { alignItems:'center', gap: 16 } },
-              h('button', { onClick: () => go('account'), className: 'mono-up', style: { color:'rgba(245,233,216,0.7)' } }, user.name),
-              h('button', { onClick: logout, style: { color:'rgba(245,233,216,0.4)' } }, I.out(16))
+          ? h('div', { style: { display: 'flex', alignItems:'center', gap: 12 } },
+              user.role === 'admin' && h('button', {
+                onClick: () => go('admin'),
+                className: 'mono-up',
+                style: {
+                  color: '#fff',
+                  background: '#ea580c',
+                  fontSize: 11,
+                  padding: '8px 14px',
+                  letterSpacing: '0.2em',
+                  fontWeight: 500
+                }
+              }, '⚙ Admin'),
+              h('button', { onClick: () => go('account'), className: 'mono-up hide-on-mobile', style: { color:'rgba(245,233,216,0.7)', fontSize: 11 } }, user.name),
+              h('button', { onClick: logout, className: 'hide-on-mobile', style: { color:'rgba(245,233,216,0.4)' } }, I.out(16))
             )
           : h('button', { className: 'btn btn-primary hide-on-mobile', style: { padding: '10px 20px' }, onClick: () => go('auth') }, 'Ingresar'),
         h('button', {
@@ -1040,8 +1053,8 @@ function EventsPage({ setRoute, setEventId }) {
 
 /* ===== EVENT DETAIL ===== */
 function EventDetail({ eventId, setRoute, setOrder }) {
-  const event = EVENTS.find(e => e.id === eventId);
-  const { user, addOrder } = useApp();
+  const { events, user, addOrder } = useApp();
+  const event = events.find(e => e.id === eventId);
   const [qty, setQty] = useState(1);
   const [step, setStep] = useState('info');
   const [guestName, setGuestName] = useState('');
@@ -1214,6 +1227,7 @@ function Confirm({ order, setRoute }) {
 
 /* ===== PUBLICATIONS ===== */
 function Publications() {
+  const { publications } = useApp();
   return h('div', { className: 'container', style: { padding: '64px 24px 80px' } },
     h('div', { className: 'sec-head' },
       h('div', { className: 'eyebrow' }, 'Biblioteca'),
@@ -1221,7 +1235,7 @@ function Publications() {
       h('p', { className: 'lead' }, 'Libros, documentales y películas que acompañan nuestros círculos de lectura, cine foros y conversatorios.')
     ),
     h('div', { className: 'grid-4' },
-      PUBLICATIONS.map((p, idx) => {
+      publications.map((p, idx) => {
         const colors = [
           { bg: '#1a0d05', fg: '#ea580c', accent: '#d4a447' },
           { bg: '#0a1218', fg: '#d4a447', accent: '#ea580c' },
@@ -1268,27 +1282,22 @@ function Publications() {
 
 /* ===== ABOUT ===== */
 function About() {
+  const { siteContent } = useApp();
   return h('div', { className: 'container-narrow', style: { padding: '64px 24px 80px' } },
     h('div', { className: 'eyebrow' }, 'Sobre LEK'),
     h('h1', { className: 'h1', style: { marginBottom: 40 } },
       'Una ', h('span', { className: 'serif-i text-gold' }, 'enredadera'), ' de saberes'
     ),
     h('div', { style: { color: 'rgba(245,233,216,0.7)', fontSize: 17, lineHeight: 1.75 } },
-      h('p', { style: { marginBottom: 24 } }, 'La Enredadera Kultural es un espacio intercultural ubicado en La Macarena, Bakatá (Bogotá), dedicado al re·conocimiento de saberes ancestrales afrodiaspóricos.'),
-      h('p', { style: { marginBottom: 24 } },
-        'Nuestra programación gira alrededor de tres ejes: ',
-        h('span', { className: 'text-orange' }, 'Lxs Que Escuchan'), ', ',
-        h('span', { className: 'text-orange' }, 'Lxs Que Leen y Escuchan'), ', y ',
-        h('span', { className: 'text-orange' }, 'Lxs Que Ven y Escuchan'),
-        ' — formatos que invitan a la atención, el contexto y el diálogo colectivo.'
-      ),
-      h('p', null, 'Aquí pasan DJs, selectorxs, cantadoras, escritorxs, cineastas y comunidades enteras. Aquí se baila salsa dura y se lee a bell hooks. Aquí cabe el viche del Pacífico y el reggae de Kingston.')
+      h('p', { style: { marginBottom: 24 } }, siteContent.aboutP1),
+      h('p', { style: { marginBottom: 24 } }, siteContent.aboutP2),
+      h('p', null, siteContent.aboutP3)
     ),
     h('div', { style: { marginTop: 64, display: 'grid', gap: 1, gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', background: 'rgba(245,233,216,0.1)', border: '1px solid rgba(245,233,216,0.1)' } },
       [
-        { icon: I.pin, label: 'Dirección', main: 'Cra 4A #26B-72, Local 2', sub: 'La Macarena · Bogotá' },
-        { icon: I.ig, label: 'Instagram', main: '@laen_redaderakultural', sub: '2.5K seguidores' },
-        { icon: I.mail, label: 'Contacto', main: 'hola@enredaderakultural.co', sub: 'WhatsApp disponible' }
+        { icon: I.pin, label: 'Dirección', main: siteContent.address, sub: siteContent.city },
+        { icon: I.ig, label: 'Instagram', main: siteContent.instagram, sub: '2.5K seguidores' },
+        { icon: I.mail, label: 'Contacto', main: siteContent.email, sub: 'WhatsApp disponible' }
       ].map((c, i) => h('div', {
         key: i,
         style: { background: '#0d0a08', padding: 28 }
@@ -1334,7 +1343,18 @@ function Auth({ setRoute }) {
       onClick: () => setMode(mode === 'login' ? 'register' : 'login'),
       className: 'mono-up',
       style: { width: '100%', marginTop: 20, fontSize: 11, color: 'rgba(245,233,216,0.5)' }
-    }, mode === 'login' ? '¿Sin cuenta? Regístrate' : '¿Ya tienes cuenta? Ingresa')
+    }, mode === 'login' ? '¿Sin cuenta? Regístrate' : '¿Ya tienes cuenta? Ingresa'),
+
+    h('div', { style: { marginTop: 40, padding: 20, border: '1px dashed rgba(234,88,12,0.4)', background: 'rgba(234,88,12,0.05)' } },
+      h('div', { className: 'mono-up text-orange', style: { fontSize: 10, marginBottom: 8 } }, '⚙ Demo · Acceso Admin'),
+      h('p', { style: { fontSize: 13, color: 'rgba(245,233,216,0.7)', lineHeight: 1.6, marginBottom: 12 } },
+        'Para entrar al panel de administración, ingresa con un correo que contenga ',
+        h('span', { style: { color: '#ea580c', fontWeight: 600 } }, '"admin"'),
+        '. Por ejemplo:'
+      ),
+      h('div', { style: { fontFamily: 'monospace', fontSize: 13, color: '#f5e9d8', background: 'rgba(0,0,0,0.4)', padding: '10px 14px', marginBottom: 8 } }, 'admin@lek.co'),
+      h('div', { style: { fontFamily: 'monospace', fontSize: 13, color: 'rgba(245,233,216,0.6)' } }, 'Contraseña: cualquiera')
+    )
   );
 }
 
@@ -1409,6 +1429,339 @@ function Footer({ setRoute }) {
   );
 }
 
+/* ===== ADMIN PANEL ===== */
+function Admin({ setRoute }) {
+  const app = useApp();
+  const [tab, setTab] = useState('overview');
+
+  if (!app.user || app.user.role !== 'admin') {
+    return h('div', { style: { maxWidth: 440, margin: '0 auto', padding: '80px 24px', textAlign: 'center' } },
+      h('div', { className: 'eyebrow', style: { display: 'inline-flex', justifyContent: 'center' } }, 'Acceso restringido'),
+      h('h1', { className: 'h1', style: { fontSize: 'clamp(36px, 5vw, 56px)', marginBottom: 24 } }, 'Panel de Admin'),
+      h('p', { className: 'text-muted', style: { marginBottom: 32 } }, 'Ingresa con un correo de administrador (incluye "admin" en el correo).'),
+      h('button', { className: 'btn btn-primary', onClick: () => setRoute('auth') }, 'Ingresar como admin')
+    );
+  }
+
+  const tabs = [
+    { id: 'overview', label: 'Resumen' },
+    { id: 'events', label: 'Eventos' },
+    { id: 'orders', label: 'Reservas' },
+    { id: 'publications', label: 'Biblioteca' },
+    { id: 'content', label: 'Contenido' },
+  ];
+
+  return h('div', { className: 'container', style: { padding: '48px 24px 80px', maxWidth: 1280 } },
+    h('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 40, flexWrap: 'wrap', gap: 16 } },
+      h('div', null,
+        h('div', { className: 'eyebrow' }, 'Panel de Admin'),
+        h('h1', { className: 'h1' }, 'Dashboard')
+      ),
+      h('button', { className: 'btn btn-ghost', onClick: () => setRoute('home'), style: { padding: '10px 18px' } }, '← Volver al sitio')
+    ),
+
+    h('div', { style: { display: 'flex', gap: 4, marginBottom: 40, borderBottom: '1px solid rgba(245,233,216,0.1)', overflowX: 'auto' } },
+      tabs.map(t => h('button', {
+        key: t.id,
+        onClick: () => setTab(t.id),
+        className: 'mono-up',
+        style: {
+          padding: '14px 20px',
+          fontSize: 11,
+          color: tab === t.id ? '#ea580c' : 'rgba(245,233,216,0.5)',
+          borderBottom: tab === t.id ? '2px solid #ea580c' : '2px solid transparent',
+          marginBottom: -1,
+          whiteSpace: 'nowrap'
+        }
+      }, t.label))
+    ),
+
+    tab === 'overview' && h(AdminOverview, { app, setTab }),
+    tab === 'events' && h(AdminEvents, { app }),
+    tab === 'orders' && h(AdminOrders, { app }),
+    tab === 'publications' && h(AdminPublications, { app }),
+    tab === 'content' && h(AdminContent, { app })
+  );
+}
+
+function StatCard({ label, value, sub }) {
+  return h('div', { style: { background: 'rgba(245,233,216,0.04)', border: '1px solid rgba(245,233,216,0.1)', padding: 24 } },
+    h('div', { className: 'mono-up', style: { fontSize: 9, color: 'rgba(234,88,12,0.85)', marginBottom: 12 } }, label),
+    h('div', { className: 'display', style: { fontSize: 36, color: '#f5e9d8', marginBottom: 6 } }, value),
+    sub && h('div', { style: { fontSize: 12, color: 'rgba(245,233,216,0.5)' } }, sub)
+  );
+}
+
+function AdminOverview({ app, setTab }) {
+  const totalRevenue = app.orders.reduce((s, o) => s + o.total, 0);
+  const totalTickets = app.orders.reduce((s, o) => s + o.qty, 0);
+  const totalCapacity = app.events.reduce((s, e) => s + e.capacity, 0);
+  const totalSold = app.events.reduce((s, e) => s + e.sold, 0);
+  const fillRate = totalCapacity > 0 ? Math.round((totalSold / totalCapacity) * 100) : 0;
+
+  return h('div', null,
+    h('div', { style: { display: 'grid', gap: 16, gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', marginBottom: 48 } },
+      h(StatCard, { label: 'Ingresos totales', value: fmtCOP(totalRevenue), sub: app.orders.length + ' reservas' }),
+      h(StatCard, { label: 'Boletas vendidas', value: totalTickets, sub: 'En todas las reservas' }),
+      h(StatCard, { label: 'Eventos activos', value: app.events.length, sub: 'Próximos en agenda' }),
+      h(StatCard, { label: 'Tasa de llenado', value: fillRate + '%', sub: totalSold + ' / ' + totalCapacity + ' cupos' })
+    ),
+
+    h('h3', { className: 'mono-up text-orange', style: { fontSize: 11, marginBottom: 16 } }, 'Reservas recientes'),
+    app.orders.length === 0
+      ? h('div', { className: 'empty' }, h('p', { className: 'text-muted' }, 'Aún no hay reservas. Compra una desde el sitio para verla aquí.'))
+      : h('div', { className: 'stack' },
+          app.orders.slice(0, 5).map(o => h('div', { key: o.id, className: 'order-row' },
+            h('div', null,
+              h('div', { className: 'mono-up', style: { fontSize: 9, color: 'rgba(234,88,12,0.85)', marginBottom: 6 } }, o.id),
+              h('div', { className: 'serif', style: { fontSize: 18, color: '#f5e9d8', fontWeight: 700 } }, o.eventTitle),
+              h('div', { className: 'text-muted', style: { fontSize: 12 } }, o.buyerName + ' · ' + o.buyerEmail)
+            ),
+            h('div', { style: { textAlign: 'right' } },
+              h('div', { className: 'display', style: { fontSize: 16, color: '#f5e9d8' } }, fmtCOP(o.total)),
+              h('div', { className: 'mono-up', style: { fontSize: 9, color: '#ea580c', marginTop: 4 } }, o.qty + ' boletas')
+            )
+          ))
+        ),
+    app.orders.length > 5 && h('button', { onClick: () => setTab('orders'), className: 'mono-up', style: { marginTop: 20, color: '#ea580c', fontSize: 11 } }, 'Ver todas las reservas →')
+  );
+}
+
+function AdminEvents({ app }) {
+  const [editing, setEditing] = useState(null);
+  const [showNew, setShowNew] = useState(false);
+
+  const blank = {
+    title: '', subtitle: '', category: 'Lxs Que Escuchan', type: 'music',
+    date: '', time: '20:00', price: 25000, capacity: 40,
+    description: '', tags: []
+  };
+
+  return h('div', null,
+    h('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 } },
+      h('h3', { className: 'mono-up text-orange', style: { fontSize: 11 } }, 'Todos los eventos · ' + app.events.length),
+      h('button', { className: 'btn btn-primary', style: { padding: '10px 18px' }, onClick: () => { setEditing(blank); setShowNew(true); } }, '+ Nuevo evento')
+    ),
+
+    (editing && showNew) && h(EventForm, {
+      event: editing,
+      onSave: (e) => { app.addEvent(e); setShowNew(false); setEditing(null); },
+      onCancel: () => { setShowNew(false); setEditing(null); },
+      title: 'Nuevo evento'
+    }),
+
+    h('div', { className: 'stack' },
+      app.events.map(e => editing && editing.id === e.id && !showNew
+        ? h(EventForm, {
+            key: e.id, event: editing,
+            onSave: (patch) => { app.updateEvent(e.id, patch); setEditing(null); },
+            onCancel: () => setEditing(null),
+            title: 'Editando: ' + e.title
+          })
+        : h('div', { key: e.id, className: 'order-row', style: { gap: 16 } },
+            h('div', { style: { width: 56, height: 56, flexShrink: 0, overflow: 'hidden', border: '1px solid rgba(245,233,216,0.1)' } },
+              h(ArtistPortrait, { event: e })
+            ),
+            h('div', { style: { flex: 1, minWidth: 0 } },
+              h('div', { className: 'mono-up', style: { fontSize: 9, color: 'rgba(234,88,12,0.85)', marginBottom: 4 } }, e.category),
+              h('div', { className: 'serif', style: { fontSize: 18, color: '#f5e9d8', fontWeight: 700 } }, e.title),
+              h('div', { className: 'text-muted', style: { fontSize: 12, textTransform: 'capitalize' } }, fmtDate(e.date) + ' · ' + e.time + ' · ' + e.sold + '/' + e.capacity + ' cupos · ' + fmtCOP(e.price))
+            ),
+            h('div', { style: { display: 'flex', gap: 8 } },
+              h('button', { className: 'btn btn-ghost', style: { padding: '8px 14px', fontSize: 10 }, onClick: () => setEditing(e) }, 'Editar'),
+              h('button', { className: 'btn btn-ghost', style: { padding: '8px 14px', fontSize: 10, borderColor: 'rgba(220,38,38,0.4)', color: '#fca5a5' }, onClick: () => { if (confirm('¿Eliminar "' + e.title + '"?')) app.deleteEvent(e.id); } }, 'Eliminar')
+            )
+          )
+      )
+    )
+  );
+}
+
+function EventForm({ event, onSave, onCancel, title }) {
+  const [form, setForm] = useState(event);
+  const upd = (k, v) => setForm(prev => ({ ...prev, [k]: v }));
+
+  return h('div', { style: { background: 'rgba(245,233,216,0.04)', border: '1px solid #ea580c', padding: 24, marginBottom: 16 } },
+    h('h4', { className: 'mono-up text-orange', style: { fontSize: 11, marginBottom: 20 } }, title),
+    h('div', { style: { display: 'grid', gap: 12 } },
+      h('div', { style: { display: 'grid', gap: 12, gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))' } },
+        h('input', { className: 'input', placeholder: 'Título / Artista', value: form.title, onChange: e => upd('title', e.target.value) }),
+        h('input', { className: 'input', placeholder: 'Subtítulo / Géneros', value: form.subtitle, onChange: e => upd('subtitle', e.target.value) })
+      ),
+      h('div', { style: { display: 'grid', gap: 12, gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))' } },
+        h('select', { className: 'input', value: form.category, onChange: e => upd('category', e.target.value), style: { background: '#0d0a08' } },
+          h('option', null, 'Lxs Que Escuchan'),
+          h('option', null, 'Lxs Que Leen y Escuchan'),
+          h('option', null, 'Lxs Que Ven y Escuchan')
+        ),
+        h('select', { className: 'input', value: form.type, onChange: e => upd('type', e.target.value), style: { background: '#0d0a08' } },
+          h('option', { value: 'music' }, 'Música'),
+          h('option', { value: 'reading' }, 'Lectura'),
+          h('option', { value: 'film' }, 'Cine')
+        )
+      ),
+      h('div', { style: { display: 'grid', gap: 12, gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))' } },
+        h('input', { className: 'input', type: 'date', value: form.date, onChange: e => upd('date', e.target.value) }),
+        h('input', { className: 'input', type: 'time', value: form.time, onChange: e => upd('time', e.target.value) }),
+        h('input', { className: 'input', type: 'number', placeholder: 'Precio COP', value: form.price, onChange: e => upd('price', parseInt(e.target.value) || 0) }),
+        h('input', { className: 'input', type: 'number', placeholder: 'Cupos', value: form.capacity, onChange: e => upd('capacity', parseInt(e.target.value) || 0) })
+      ),
+      h('textarea', { className: 'input', placeholder: 'Descripción', value: form.description, onChange: e => upd('description', e.target.value), rows: 3, style: { resize: 'vertical', fontFamily: 'Inter, sans-serif' } }),
+      h('input', { className: 'input', placeholder: 'Tags separados por coma (Reggae, Vinilo)', value: (form.tags || []).join(', '), onChange: e => upd('tags', e.target.value.split(',').map(t => t.trim()).filter(Boolean)) }),
+      h('div', { style: { display: 'flex', gap: 8, marginTop: 8 } },
+        h('button', { className: 'btn btn-primary', style: { padding: '10px 20px' }, onClick: () => onSave(form), disabled: !form.title || !form.date }, 'Guardar'),
+        h('button', { className: 'btn btn-ghost', style: { padding: '10px 20px' }, onClick: onCancel }, 'Cancelar')
+      )
+    )
+  );
+}
+
+function AdminOrders({ app }) {
+  const [search, setSearch] = useState('');
+  const filtered = app.orders.filter(o =>
+    !search || (o.id + o.eventTitle + o.buyerName + o.buyerEmail).toLowerCase().includes(search.toLowerCase())
+  );
+
+  return h('div', null,
+    h('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24, flexWrap: 'wrap', gap: 12 } },
+      h('h3', { className: 'mono-up text-orange', style: { fontSize: 11 } }, 'Todas las reservas · ' + app.orders.length),
+      h('div', { className: 'search-wrap', style: { maxWidth: 280 } },
+        h('span', { className: 'search-icon' }, I.search(14)),
+        h('input', { className: 'search-input', placeholder: 'Buscar por nombre, correo, evento…', value: search, onChange: e => setSearch(e.target.value) })
+      )
+    ),
+    filtered.length === 0
+      ? h('div', { className: 'empty' }, h('p', { className: 'text-muted' }, 'Sin reservas para mostrar.'))
+      : h('div', { className: 'stack' },
+          filtered.map(o => h('div', { key: o.id, className: 'order-row', style: { alignItems: 'flex-start', gap: 16, flexWrap: 'wrap' } },
+            h('div', { style: { flex: 1, minWidth: 200 } },
+              h('div', { className: 'mono-up', style: { fontSize: 9, color: 'rgba(234,88,12,0.85)', marginBottom: 6 } }, o.id),
+              h('div', { className: 'serif', style: { fontSize: 18, color: '#f5e9d8', fontWeight: 700, marginBottom: 4 } }, o.eventTitle),
+              h('div', { className: 'text-muted', style: { fontSize: 13, textTransform: 'capitalize', marginBottom: 4 } }, fmtDate(o.date)),
+              h('div', { style: { fontSize: 13, color: 'rgba(245,233,216,0.8)' } }, o.buyerName),
+              h('div', { className: 'text-muted', style: { fontSize: 12 } }, o.buyerEmail)
+            ),
+            h('div', { style: { textAlign: 'right' } },
+              h('div', { className: 'display', style: { fontSize: 18, color: '#f5e9d8', marginBottom: 6 } }, fmtCOP(o.total)),
+              h('div', { className: 'mono-up', style: { fontSize: 9, color: '#ea580c', marginBottom: 12 } }, o.qty + ' boletas · ' + (o.status || 'confirmed')),
+              h('div', { style: { display: 'flex', gap: 6, justifyContent: 'flex-end' } },
+                h('button', { className: 'btn btn-ghost', style: { padding: '6px 12px', fontSize: 9, borderColor: 'rgba(220,38,38,0.4)', color: '#fca5a5' }, onClick: () => { if (confirm('¿Cancelar reserva ' + o.id + '?')) app.deleteOrder(o.id); } }, 'Cancelar')
+              )
+            )
+          ))
+        )
+  );
+}
+
+function AdminPublications({ app }) {
+  const [editing, setEditing] = useState(null);
+  const [showNew, setShowNew] = useState(false);
+  const blank = { title: '', author: '', type: 'Libro', excerpt: '' };
+
+  const PubForm = ({ p, save, cancel, title }) => {
+    const [form, setForm] = useState(p);
+    const upd = (k, v) => setForm(prev => ({ ...prev, [k]: v }));
+    return h('div', { style: { background: 'rgba(245,233,216,0.04)', border: '1px solid #ea580c', padding: 24, marginBottom: 16 } },
+      h('h4', { className: 'mono-up text-orange', style: { fontSize: 11, marginBottom: 20 } }, title),
+      h('div', { style: { display: 'grid', gap: 12 } },
+        h('input', { className: 'input', placeholder: 'Título', value: form.title, onChange: e => upd('title', e.target.value) }),
+        h('input', { className: 'input', placeholder: 'Autor / Director', value: form.author, onChange: e => upd('author', e.target.value) }),
+        h('input', { className: 'input', placeholder: 'Tipo (Libro · Círculo de Lectura)', value: form.type, onChange: e => upd('type', e.target.value) }),
+        h('textarea', { className: 'input', placeholder: 'Descripción', value: form.excerpt, onChange: e => upd('excerpt', e.target.value), rows: 3, style: { resize: 'vertical', fontFamily: 'Inter, sans-serif' } }),
+        h('div', { style: { display: 'flex', gap: 8 } },
+          h('button', { className: 'btn btn-primary', style: { padding: '10px 20px' }, onClick: () => save(form), disabled: !form.title }, 'Guardar'),
+          h('button', { className: 'btn btn-ghost', style: { padding: '10px 20px' }, onClick: cancel }, 'Cancelar')
+        )
+      )
+    );
+  };
+
+  return h('div', null,
+    h('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 } },
+      h('h3', { className: 'mono-up text-orange', style: { fontSize: 11 } }, 'Biblioteca · ' + app.publications.length),
+      h('button', { className: 'btn btn-primary', style: { padding: '10px 18px' }, onClick: () => { setEditing(blank); setShowNew(true); } }, '+ Nueva publicación')
+    ),
+    (editing && showNew) && h(PubForm, {
+      p: editing, title: 'Nueva publicación',
+      save: (p) => { app.addPublication(p); setShowNew(false); setEditing(null); },
+      cancel: () => { setShowNew(false); setEditing(null); }
+    }),
+    h('div', { className: 'stack' },
+      app.publications.map(p => editing && editing.id === p.id && !showNew
+        ? h(PubForm, {
+            key: p.id, p: editing, title: 'Editando: ' + p.title,
+            save: (patch) => { app.updatePublication(p.id, patch); setEditing(null); },
+            cancel: () => setEditing(null)
+          })
+        : h('div', { key: p.id, className: 'order-row' },
+            h('div', null,
+              h('div', { className: 'mono-up', style: { fontSize: 9, color: 'rgba(234,88,12,0.85)', marginBottom: 4 } }, p.type),
+              h('div', { className: 'serif', style: { fontSize: 18, color: '#f5e9d8', fontWeight: 700 } }, p.title),
+              h('div', { className: 'serif-i text-muted', style: { fontSize: 13 } }, p.author)
+            ),
+            h('div', { style: { display: 'flex', gap: 8 } },
+              h('button', { className: 'btn btn-ghost', style: { padding: '8px 14px', fontSize: 10 }, onClick: () => setEditing(p) }, 'Editar'),
+              h('button', { className: 'btn btn-ghost', style: { padding: '8px 14px', fontSize: 10, borderColor: 'rgba(220,38,38,0.4)', color: '#fca5a5' }, onClick: () => { if (confirm('¿Eliminar "' + p.title + '"?')) app.deletePublication(p.id); } }, 'Eliminar')
+            )
+          )
+      )
+    )
+  );
+}
+
+function AdminContent({ app }) {
+  const [form, setForm] = useState(app.siteContent);
+  const [saved, setSaved] = useState(false);
+  const upd = (k, v) => setForm(prev => ({ ...prev, [k]: v }));
+  const save = () => {
+    app.updateSiteContent(form);
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2000);
+  };
+
+  const Field = ({ label, k, multi }) => h('div', { style: { marginBottom: 16 } },
+    h('label', { className: 'mono-up', style: { fontSize: 9, color: 'rgba(234,88,12,0.85)', marginBottom: 8, display: 'block' } }, label),
+    multi
+      ? h('textarea', { className: 'input', value: form[k] || '', onChange: e => upd(k, e.target.value), rows: 3, style: { resize: 'vertical', fontFamily: 'Inter, sans-serif' } })
+      : h('input', { className: 'input', value: form[k] || '', onChange: e => upd(k, e.target.value) })
+  );
+
+  return h('div', null,
+    h('h3', { className: 'mono-up text-orange', style: { fontSize: 11, marginBottom: 24 } }, 'Edita el contenido del sitio'),
+
+    h('div', { style: { background: 'rgba(245,233,216,0.04)', border: '1px solid rgba(245,233,216,0.1)', padding: 24, marginBottom: 24 } },
+      h('h4', { className: 'serif', style: { fontSize: 18, color: '#f5e9d8', fontWeight: 700, marginBottom: 16 } }, 'Hero / Inicio'),
+      h(Field, { label: 'Eyebrow (texto pequeño superior)', k: 'heroEyebrow' }),
+      h('div', { style: { display: 'grid', gap: 12, gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))' } },
+        h(Field, { label: 'Línea 1', k: 'heroLine1' }),
+        h(Field, { label: 'Línea 2 (naranja)', k: 'heroLine2' }),
+        h(Field, { label: 'Línea 3 (cursiva oro)', k: 'heroLine3' })
+      ),
+      h(Field, { label: 'Descripción', k: 'heroDesc', multi: true })
+    ),
+
+    h('div', { style: { background: 'rgba(245,233,216,0.04)', border: '1px solid rgba(245,233,216,0.1)', padding: 24, marginBottom: 24 } },
+      h('h4', { className: 'serif', style: { fontSize: 18, color: '#f5e9d8', fontWeight: 700, marginBottom: 16 } }, 'Página Sobre LEK'),
+      h(Field, { label: 'Párrafo 1', k: 'aboutP1', multi: true }),
+      h(Field, { label: 'Párrafo 2', k: 'aboutP2', multi: true }),
+      h(Field, { label: 'Párrafo 3', k: 'aboutP3', multi: true })
+    ),
+
+    h('div', { style: { background: 'rgba(245,233,216,0.04)', border: '1px solid rgba(245,233,216,0.1)', padding: 24, marginBottom: 24 } },
+      h('h4', { className: 'serif', style: { fontSize: 18, color: '#f5e9d8', fontWeight: 700, marginBottom: 16 } }, 'Información de contacto'),
+      h(Field, { label: 'Dirección', k: 'address' }),
+      h(Field, { label: 'Ciudad', k: 'city' }),
+      h(Field, { label: 'Instagram', k: 'instagram' }),
+      h(Field, { label: 'Email', k: 'email' })
+    ),
+
+    h('div', { style: { display: 'flex', gap: 12, alignItems: 'center' } },
+      h('button', { className: 'btn btn-primary', onClick: save }, 'Guardar cambios'),
+      saved && h('span', { className: 'mono-up', style: { fontSize: 11, color: '#22c55e' } }, '✓ Guardado')
+    )
+  );
+}
+
 /* ===== APP ===== */
 function App() {
   const [route, setRoute] = useState('home');
@@ -1426,7 +1779,8 @@ function App() {
         route === 'publications' && h(Publications),
         route === 'about' && h(About),
         route === 'auth' && h(Auth, { setRoute }),
-        route === 'account' && h(Account, { setRoute })
+        route === 'account' && h(Account, { setRoute }),
+        route === 'admin' && h(Admin, { setRoute })
       ),
       h(Footer, { setRoute })
     )
