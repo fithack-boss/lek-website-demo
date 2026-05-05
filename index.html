@@ -583,6 +583,11 @@ const I = {
   check: (s) => SVG(h('polyline',{points:'20 6 9 17 4 12'}), s, 2.5),
   ticket: (s) => SVG(h('path',{d:'M3 7v2a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2z'}), s),
   search: (s) => SVG([h('circle',{key:1,cx:11,cy:11,r:8}),h('line',{key:2,x1:21,y1:21,x2:16.65,y2:16.65})], s),
+  bag: (s) => SVG([h('path',{key:1,d:'M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z'}),h('line',{key:2,x1:3,y1:6,x2:21,y2:6}),h('path',{key:3,d:'M16 10a4 4 0 0 1-8 0'})], s),
+  fork: (s) => SVG([h('path',{key:1,d:'M8 2v8a2 2 0 0 0 2 2v9'}),h('path',{key:2,d:'M16 2c-1 0-2 1-2 2v6h4V4c0-1-1-2-2-2z'}),h('line',{key:3,x1:4,y1:2,x2:4,y2:8}),h('line',{key:4,x1:6,y1:2,x2:6,y2:8})], s),
+  trash: (s) => SVG([h('polyline',{key:1,points:'3 6 5 6 21 6'}),h('path',{key:2,d:'M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2'})], s),
+  plus: (s) => SVG([h('line',{key:1,x1:12,y1:5,x2:12,y2:19}),h('line',{key:2,x1:5,y1:12,x2:19,y2:12})], s),
+  minus: (s) => SVG(h('line',{x1:5,y1:12,x2:19,y2:12}), s),
 };
 
 /* ===== LEK LOGO (matches her actual logo) ===== */
@@ -769,6 +774,33 @@ const PUBLICATIONS = [
   { id:"p4", title:"Everything is a Remix", author:"Kirby Ferguson", type:"Documental · Serie", excerpt:"Serie sobre cómo toda creación es, en el fondo, una recombinación." },
 ];
 
+const PRODUCTS = [
+  { id: 'sh1', name: 'Camiseta LEK', price: 65000, category: 'Merch', desc: 'Algodón orgánico. Logo LEK bordado en pecho. Tallas S-XL.', stock: 24, color: '#ea580c' },
+  { id: 'sh2', name: 'Tote Bag Enredadera', price: 38000, category: 'Merch', desc: 'Lona cruda con ilustración de enredadera. Para cargar libros, vinilos y mercado.', stock: 31, color: '#d4a447' },
+  { id: 'sh3', name: 'Membresía Mensual', price: 80000, category: 'Membresía', desc: 'Acceso a todos los círculos de lectura y cine foro del mes. 20% off en eventos.', stock: 999, color: '#ec4899', featured: true },
+  { id: 'sh4', name: 'Membresía Anual', price: 800000, category: 'Membresía', desc: 'Todo lo de la membresía mensual + 2 entradas gratis al mes + descuentos en barra.', stock: 999, color: '#84cc16' },
+  { id: 'sh5', name: 'Vinilo · Compilado LEK Vol.1', price: 120000, category: 'Música', desc: 'Selección de Mr. Tosh, Mizz Kiara y Cristh Pérez. Edición limitada de 100 copias.', stock: 8, color: '#ea580c' },
+  { id: 'sh6', name: 'Libro: Antología Afrodiaspórica', price: 55000, category: 'Lectura', desc: 'Compilado curado por LEK. Textos de bell hooks, Audre Lorde, Conceição Evaristo.', stock: 17, color: '#d4a447' },
+];
+
+const MENU = [
+  { id: 'm1', name: 'Sancocho de Gallina', price: 32000, category: 'Plato del día', desc: 'Receta del Pacífico. Yuca, ñame, plátano y gallina criolla. Servido con arroz blanco.', special: true, color: '#ea580c' },
+  { id: 'm2', name: 'Empanadas Vallunas', price: 12000, category: 'Para picar', desc: 'Tres empanadas de papa con guiso. Con ají picante de la casa.', color: '#d4a447' },
+  { id: 'm3', name: 'Arepa de Choclo con Queso', price: 18000, category: 'Para picar', desc: 'Hecha al momento. Con quesito y mantequilla.', color: '#84cc16' },
+  { id: 'm4', name: 'Patacones con Hogao', price: 15000, category: 'Para picar', desc: 'Plátano verde frito, salsa de tomate y cebolla larga.', color: '#ea580c' },
+  { id: 'm5', name: 'Bandeja Paisa Vegana', price: 38000, category: 'Plato fuerte', desc: 'Frijoles, arroz, plátano, aguacate, arepa, chicharrón de seitán.', color: '#84cc16' },
+  { id: 'm6', name: 'Pescado al Coco', price: 42000, category: 'Plato fuerte', desc: 'Filete de tilapia en leche de coco con arroz con coco y patacones.', color: '#d4a447' },
+];
+
+const COCKTAILS = [
+  { id: 'c1', name: 'Viche Sour', price: 22000, category: 'Cóctel del día', desc: 'Viche del Pacífico, limón, panela, clara de huevo. La esencia LEK.', special: true, color: '#d4a447' },
+  { id: 'c2', name: 'Aguardiente Tropical', price: 18000, category: 'Cóctel', desc: 'Aguardiente, maracuyá, hierbabuena, soda.', color: '#84cc16' },
+  { id: 'c3', name: 'Ron con Coco', price: 25000, category: 'Cóctel', desc: 'Ron añejo, leche de coco, lima, nuez moscada.', color: '#ea580c' },
+  { id: 'c4', name: 'Mojito de Lulo', price: 20000, category: 'Cóctel', desc: 'Ron blanco, lulo, hierbabuena, azúcar morena.', color: '#84cc16' },
+  { id: 'c5', name: 'Cerveza Artesanal Local', price: 14000, category: 'Cerveza', desc: 'Rotativa. Pregunta por la del día. IPA, Stout o Lager.', color: '#d4a447' },
+  { id: 'c6', name: 'Limonada de Coco', price: 12000, category: 'Sin alcohol', desc: 'Limón, leche de coco, hierbabuena. Refrescante.', color: '#ec4899' },
+];
+
 const fmtCOP = n => "$" + n.toLocaleString("es-CO");
 const fmtDate = iso => {
   const d = new Date(iso + "T00:00:00");
@@ -788,8 +820,13 @@ const useApp = () => useContext(Ctx);
 function AppProvider({ children }) {
   const [user, setUser] = useState(null);
   const [orders, setOrders] = useState([]);
+  const [shopOrders, setShopOrders] = useState([]);
+  const [cart, setCart] = useState([]);
   const [events, setEvents] = useState(EVENTS);
   const [publications, setPublications] = useState(PUBLICATIONS);
+  const [products, setProducts] = useState(PRODUCTS);
+  const [menu, setMenu] = useState(MENU);
+  const [cocktails, setCocktails] = useState(COCKTAILS);
   const [siteContent, setSiteContent] = useState({
     heroEyebrow: 'Espacio Intercultural · Bakatá, Bogotá',
     heroLine1: 'LA',
@@ -803,6 +840,7 @@ function AppProvider({ children }) {
     city: 'La Macarena · Bogotá',
     instagram: '@laen_redaderakultural',
     email: 'hola@enredaderakultural.co',
+    menuIntro: 'Cocina del Pacífico colombiano y sabores afrodiaspóricos. Carta rotativa según mercado. Plato y cóctel del día cambian cada semana.',
   });
 
   const login = (email, name) => {
@@ -817,6 +855,26 @@ function AppProvider({ children }) {
     setOrders(prev => [order, ...prev]);
     return order;
   };
+  const addShopOrder = (o) => {
+    const order = { ...o, id: "SHP-" + Math.random().toString(36).slice(2,7).toUpperCase(), status: 'confirmed', createdAt: new Date().toISOString() };
+    setShopOrders(prev => [order, ...prev]);
+    setCart([]);
+    return order;
+  };
+  const addToCart = (product, qty) => {
+    qty = qty || 1;
+    setCart(prev => {
+      const existing = prev.find(c => c.id === product.id);
+      if (existing) return prev.map(c => c.id === product.id ? { ...c, qty: c.qty + qty } : c);
+      return [...prev, { ...product, qty }];
+    });
+  };
+  const updateCartQty = (id, qty) => {
+    if (qty <= 0) return setCart(prev => prev.filter(c => c.id !== id));
+    setCart(prev => prev.map(c => c.id === id ? { ...c, qty } : c));
+  };
+  const removeFromCart = (id) => setCart(prev => prev.filter(c => c.id !== id));
+
   const updateEvent = (id, patch) => setEvents(prev => prev.map(e => e.id === id ? { ...e, ...patch } : e));
   const addEvent = (e) => setEvents(prev => [{ ...e, id: 'evt-' + Date.now(), sold: 0 }, ...prev]);
   const deleteEvent = (id) => setEvents(prev => prev.filter(e => e.id !== id));
@@ -825,14 +883,28 @@ function AppProvider({ children }) {
   const addPublication = (p) => setPublications(prev => [{ ...p, id: 'pub-' + Date.now() }, ...prev]);
   const updatePublication = (id, patch) => setPublications(prev => prev.map(p => p.id === id ? { ...p, ...patch } : p));
   const deletePublication = (id) => setPublications(prev => prev.filter(p => p.id !== id));
+  const addProduct = (p) => setProducts(prev => [{ ...p, id: 'sh-' + Date.now() }, ...prev]);
+  const updateProduct = (id, patch) => setProducts(prev => prev.map(p => p.id === id ? { ...p, ...patch } : p));
+  const deleteProduct = (id) => setProducts(prev => prev.filter(p => p.id !== id));
+  const addMenuItem = (m) => setMenu(prev => [{ ...m, id: 'm-' + Date.now() }, ...prev]);
+  const updateMenuItem = (id, patch) => setMenu(prev => prev.map(m => m.id === id ? { ...m, ...patch } : m));
+  const deleteMenuItem = (id) => setMenu(prev => prev.filter(m => m.id !== id));
+  const addCocktail = (c) => setCocktails(prev => [{ ...c, id: 'c-' + Date.now() }, ...prev]);
+  const updateCocktail = (id, patch) => setCocktails(prev => prev.map(c => c.id === id ? { ...c, ...patch } : c));
+  const deleteCocktail = (id) => setCocktails(prev => prev.filter(c => c.id !== id));
   const updateSiteContent = (patch) => setSiteContent(prev => ({ ...prev, ...patch }));
 
   return h(Ctx.Provider, {
     value: {
       user, login, logout, register,
       orders, addOrder, updateOrder, deleteOrder,
+      shopOrders, addShopOrder,
+      cart, addToCart, updateCartQty, removeFromCart,
       events, updateEvent, addEvent, deleteEvent,
       publications, addPublication, updatePublication, deletePublication,
+      products, addProduct, updateProduct, deleteProduct,
+      menu, addMenuItem, updateMenuItem, deleteMenuItem,
+      cocktails, addCocktail, updateCocktail, deleteCocktail,
       siteContent, updateSiteContent
     }
   }, children);
@@ -840,15 +912,18 @@ function AppProvider({ children }) {
 
 /* ===== NAV ===== */
 function Nav({ route, setRoute }) {
-  const { user, logout } = useApp();
+  const { user, logout, cart } = useApp();
   const [open, setOpen] = useState(false);
   const links = [
     { id:"home", label:"Inicio" },
-    { id:"events", label:"Programación" },
+    { id:"events", label:"Eventos" },
+    { id:"menu", label:"Menú" },
+    { id:"shop", label:"Tienda" },
     { id:"publications", label:"Biblioteca" },
     { id:"about", label:"Sobre LEK" },
   ];
   const go = (r) => { setRoute(r); setOpen(false); window.scrollTo({top:0}); };
+  const cartCount = (cart || []).reduce((s, c) => s + c.qty, 0);
 
   return h('header', { className: 'nav' },
     h('div', { className: 'container nav-inner' },
@@ -867,6 +942,28 @@ function Nav({ route, setRoute }) {
         }, l.label))
       ),
       h('div', { style: { display: 'flex', alignItems: 'center', gap: 12 } },
+        h('button', {
+          onClick: () => go('cart'),
+          style: {
+            position: 'relative',
+            color: cartCount > 0 ? '#ea580c' : 'rgba(245,233,216,0.6)',
+            padding: 8
+          },
+          'aria-label': 'Carrito'
+        },
+          I.bag(20),
+          cartCount > 0 && h('span', {
+            style: {
+              position: 'absolute', top: -2, right: -2,
+              background: '#ea580c', color: '#fff',
+              fontSize: 9, fontWeight: 700,
+              minWidth: 16, height: 16,
+              borderRadius: 8,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              padding: '0 4px'
+            }
+          }, cartCount)
+        ),
         user
           ? h('div', { style: { display: 'flex', alignItems:'center', gap: 12 } },
               user.role === 'admin' && h('button', {
@@ -1429,6 +1526,474 @@ function Footer({ setRoute }) {
   );
 }
 
+/* ===== PRODUCT VISUAL (SVG) ===== */
+function ProductArt({ product }) {
+  const c = product.color || '#ea580c';
+  return h('svg', {
+    viewBox: '0 0 300 300',
+    preserveAspectRatio: 'xMidYMid slice',
+    style: { width: '100%', height: '100%', display: 'block' }
+  },
+    h('defs', null,
+      h('pattern', { id: 'pg' + product.id, x: 0, y: 0, width: 4, height: 4, patternUnits: 'userSpaceOnUse' },
+        h('rect', { width: 4, height: 4, fill: '#1a0d05' }),
+        h('circle', { cx: 1, cy: 1, r: 0.3, fill: c, opacity: 0.2 })
+      ),
+      h('radialGradient', { id: 'pgr' + product.id, cx: '50%', cy: '50%', r: '60%' },
+        h('stop', { offset: '0%', stopColor: c, stopOpacity: 0.3 }),
+        h('stop', { offset: '100%', stopColor: '#0d0a08', stopOpacity: 1 })
+      )
+    ),
+    h('rect', { width: 300, height: 300, fill: 'url(#pg' + product.id + ')' }),
+    h('rect', { width: 300, height: 300, fill: 'url(#pgr' + product.id + ')' }),
+    h('circle', { cx: 150, cy: 150, r: 90, fill: 'none', stroke: c, strokeWidth: 1, opacity: 0.4 }),
+    h('circle', { cx: 150, cy: 150, r: 60, fill: 'none', stroke: c, strokeWidth: 1, opacity: 0.6 }),
+    h('text', {
+      x: 150, y: 145,
+      textAnchor: 'middle',
+      fontFamily: 'Archivo Black, sans-serif',
+      fontSize: 14, letterSpacing: '3',
+      fill: c
+    }, product.category.toUpperCase().slice(0, 14)),
+    h('text', {
+      x: 150, y: 175,
+      textAnchor: 'middle',
+      fontFamily: 'Playfair Display, serif',
+      fontStyle: 'italic',
+      fontSize: 22,
+      fill: '#f5e9d8'
+    }, product.name.slice(0, 18))
+  );
+}
+
+function FoodArt({ item }) {
+  const c = item.color || '#ea580c';
+  const seed = item.id.charCodeAt(0) + (item.id.charCodeAt(1) || 0);
+  return h('svg', {
+    viewBox: '0 0 300 220',
+    preserveAspectRatio: 'xMidYMid slice',
+    style: { width: '100%', height: '100%', display: 'block' }
+  },
+    h('defs', null,
+      h('pattern', { id: 'fg' + item.id, x: 0, y: 0, width: 4, height: 4, patternUnits: 'userSpaceOnUse' },
+        h('rect', { width: 4, height: 4, fill: '#14100d' }),
+        h('circle', { cx: 1, cy: 1, r: 0.4, fill: c, opacity: 0.2 })
+      ),
+      h('radialGradient', { id: 'fgr' + item.id, cx: '50%', cy: '60%', r: '50%' },
+        h('stop', { offset: '0%', stopColor: c, stopOpacity: 0.25 }),
+        h('stop', { offset: '100%', stopColor: '#0d0a08', stopOpacity: 1 })
+      )
+    ),
+    h('rect', { width: 300, height: 220, fill: 'url(#fg' + item.id + ')' }),
+    h('rect', { width: 300, height: 220, fill: 'url(#fgr' + item.id + ')' }),
+    /* Plate */
+    h('ellipse', { cx: 150, cy: 130, rx: 95, ry: 30, fill: 'none', stroke: c, strokeWidth: 1, opacity: 0.5 }),
+    h('ellipse', { cx: 150, cy: 125, rx: 75, ry: 22, fill: c, opacity: 0.15 }),
+    h('ellipse', { cx: 150, cy: 122, rx: 60, ry: 18, fill: c, opacity: 0.3 }),
+    /* Decorative dots / garnish */
+    [...Array(6)].map((_, i) => h('circle', {
+      key: i,
+      cx: 110 + ((seed * (i+1)) % 80),
+      cy: 110 + ((seed * (i+2)) % 30),
+      r: 2 + (i % 3),
+      fill: i % 2 ? c : '#d4a447',
+      opacity: 0.7
+    })),
+    h('text', {
+      x: 150, y: 175,
+      textAnchor: 'middle',
+      fontFamily: 'Playfair Display, serif',
+      fontStyle: 'italic',
+      fontSize: 18,
+      fill: '#f5e9d8'
+    }, item.name.slice(0, 22)),
+    h('text', {
+      x: 150, y: 195,
+      textAnchor: 'middle',
+      fontFamily: 'Inter, sans-serif',
+      fontSize: 9, letterSpacing: '3',
+      fill: c, fontWeight: 500
+    }, item.category.toUpperCase())
+  );
+}
+
+/* ===== SHOP ===== */
+function Shop({ setRoute }) {
+  const { products, addToCart, cart } = useApp();
+  const [filter, setFilter] = useState('all');
+  const [added, setAdded] = useState(null);
+  const cats = ['all', ...Array.from(new Set(products.map(p => p.category)))];
+  const filtered = filter === 'all' ? products : products.filter(p => p.category === filter);
+
+  const handleAdd = (p) => {
+    addToCart(p, 1);
+    setAdded(p.id);
+    setTimeout(() => setAdded(null), 1500);
+  };
+
+  return h('div', { className: 'container', style: { padding: '64px 24px 80px' } },
+    h('div', { className: 'sec-head' },
+      h('div', { className: 'eyebrow' }, 'Tienda'),
+      h('h1', { className: 'h1' }, 'Mercancía & Membresías'),
+      h('p', { className: 'lead' }, 'Vinilos, libros, camisetas y accesos. Cada compra sostiene la programación de LEK.')
+    ),
+
+    h('div', { className: 'chips', style: { marginBottom: 40, flexWrap: 'wrap' } },
+      cats.map(c => h('button', {
+        key: c,
+        onClick: () => setFilter(c),
+        className: 'chip' + (filter === c ? ' active' : '')
+      }, c === 'all' ? 'Todo' : c))
+    ),
+
+    h('div', { className: 'grid-3' },
+      filtered.map(p => h('div', {
+        key: p.id,
+        style: {
+          background: '#0d0a08',
+          border: '1px solid ' + (p.featured ? '#ea580c' : 'rgba(245,233,216,0.1)'),
+          overflow: 'hidden',
+          position: 'relative',
+          display: 'flex',
+          flexDirection: 'column'
+        }
+      },
+        p.featured && h('div', {
+          style: {
+            position: 'absolute', top: 12, right: 12,
+            background: '#ea580c', color: '#fff',
+            padding: '4px 10px', fontSize: 9, letterSpacing: '0.2em',
+            fontWeight: 600, textTransform: 'uppercase', zIndex: 1
+          }
+        }, '★ Destacado'),
+        h('div', { style: { aspectRatio: '1/1', overflow: 'hidden' } },
+          h(ProductArt, { product: p })
+        ),
+        h('div', { style: { padding: 20, flex: 1, display: 'flex', flexDirection: 'column' } },
+          h('div', { className: 'mono-up', style: { fontSize: 9, color: '#ea580c', marginBottom: 8 } }, p.category),
+          h('h3', { className: 'serif', style: { fontSize: 22, color: '#f5e9d8', fontWeight: 700, marginBottom: 8 } }, p.name),
+          h('p', { style: { fontSize: 13, color: 'rgba(245,233,216,0.6)', lineHeight: 1.6, marginBottom: 16, flex: 1 } }, p.desc),
+          h('div', { className: 'row', style: { paddingTop: 16, borderTop: '1px solid rgba(245,233,216,0.08)' } },
+            h('span', { className: 'display', style: { fontSize: 18, color: '#f5e9d8' } }, fmtCOP(p.price)),
+            p.stock > 0
+              ? h('button', {
+                  className: 'btn btn-primary',
+                  style: { padding: '10px 16px', fontSize: 10 },
+                  onClick: () => handleAdd(p)
+                }, added === p.id ? '✓ Añadido' : '+ Carrito')
+              : h('span', { className: 'mono-up', style: { fontSize: 10, color: '#fca5a5' } }, 'Agotado')
+          )
+        )
+      ))
+    ),
+
+    cart.length > 0 && h('div', {
+      style: {
+        position: 'sticky',
+        bottom: 16,
+        marginTop: 40,
+        background: '#ea580c',
+        padding: '16px 20px',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        gap: 16,
+        flexWrap: 'wrap'
+      }
+    },
+      h('div', { style: { color: '#fff' } },
+        h('div', { className: 'mono-up', style: { fontSize: 10, opacity: 0.85, marginBottom: 4 } }, cart.reduce((s, c) => s + c.qty, 0) + ' artículos en el carrito'),
+        h('div', { className: 'display', style: { fontSize: 18 } }, fmtCOP(cart.reduce((s, c) => s + c.price * c.qty, 0)))
+      ),
+      h('button', { className: 'btn', style: { background: '#0d0a08', color: '#fff', borderColor: '#0d0a08', padding: '12px 24px' }, onClick: () => setRoute('cart') }, 'Ver carrito →')
+    )
+  );
+}
+
+/* ===== CART / CHECKOUT ===== */
+function Cart({ setRoute, setOrder }) {
+  const { cart, updateCartQty, removeFromCart, addShopOrder, user } = useApp();
+  const [step, setStep] = useState('cart');
+  const [name, setName] = useState(user ? user.name : '');
+  const [email, setEmail] = useState(user ? user.email : '');
+  const [phone, setPhone] = useState('');
+  const [address, setAddress] = useState('');
+  const [card, setCard] = useState('');
+  const [exp, setExp] = useState('');
+  const [cvc, setCvc] = useState('');
+  const [processing, setProcessing] = useState(false);
+
+  const subtotal = cart.reduce((s, c) => s + c.price * c.qty, 0);
+  const shipping = subtotal > 0 && cart.some(c => c.category !== 'Membresía') ? 12000 : 0;
+  const total = subtotal + shipping;
+
+  const finalize = () => {
+    setProcessing(true);
+    setTimeout(() => {
+      const order = addShopOrder({
+        items: cart.map(c => ({ id: c.id, name: c.name, qty: c.qty, price: c.price })),
+        subtotal, shipping, total,
+        buyerName: name, buyerEmail: email, buyerPhone: phone, address,
+        type: 'shop'
+      });
+      setOrder(order);
+      setRoute('shopConfirm');
+      setProcessing(false);
+    }, 1100);
+  };
+
+  if (cart.length === 0 && step === 'cart') {
+    return h('div', { className: 'container-narrow', style: { padding: '80px 24px', textAlign: 'center' } },
+      h('div', { className: 'eyebrow', style: { display: 'inline-flex', justifyContent: 'center' } }, 'Tu carrito'),
+      h('h1', { className: 'h1' }, 'Aún está vacío'),
+      h('p', { className: 'lead', style: { textAlign: 'center', margin: '24px auto 32px' } }, 'Echa un ojo a la tienda — vinilos, mercancía y membresías.'),
+      h('button', { className: 'btn btn-primary', onClick: () => setRoute('shop') }, 'Ir a la tienda')
+    );
+  }
+
+  return h('div', { className: 'container', style: { padding: '48px 24px 80px', maxWidth: 1100 } },
+    h('button', { className: 'back-link', onClick: () => step === 'checkout' ? setStep('cart') : setRoute('shop') }, '← ' + (step === 'checkout' ? 'Volver al carrito' : 'Seguir comprando')),
+    h('div', { style: { display: 'grid', gap: 48, gridTemplateColumns: '1fr', alignItems: 'flex-start' } },
+      h('div', { style: { display: 'grid', gap: 32, gridTemplateColumns: 'minmax(0, 1fr)' } },
+        h('div', null,
+          h('div', { className: 'eyebrow' }, step === 'checkout' ? 'Pago' : 'Carrito'),
+          h('h1', { className: 'h1' }, step === 'checkout' ? 'Finalizar compra' : 'Tu carrito')
+        ),
+
+        step === 'cart' && h('div', { className: 'stack' },
+          cart.map(item => h('div', { key: item.id, className: 'order-row', style: { gap: 16 } },
+            h('div', { style: { width: 72, height: 72, flexShrink: 0, overflow: 'hidden', border: '1px solid rgba(245,233,216,0.1)' } },
+              h(ProductArt, { product: item })
+            ),
+            h('div', { style: { flex: 1, minWidth: 0 } },
+              h('div', { className: 'mono-up', style: { fontSize: 9, color: 'rgba(234,88,12,0.85)', marginBottom: 4 } }, item.category),
+              h('div', { className: 'serif', style: { fontSize: 17, color: '#f5e9d8', fontWeight: 700 } }, item.name),
+              h('div', { className: 'text-muted', style: { fontSize: 13, marginTop: 2 } }, fmtCOP(item.price))
+            ),
+            h('div', { style: { display: 'flex', alignItems: 'center', gap: 8 } },
+              h('button', { className: 'qty-btn', style: { width: 30, height: 30, fontSize: 14 }, onClick: () => updateCartQty(item.id, item.qty - 1) }, '−'),
+              h('span', { style: { minWidth: 24, textAlign: 'center', color: '#f5e9d8', fontWeight: 500 } }, item.qty),
+              h('button', { className: 'qty-btn', style: { width: 30, height: 30, fontSize: 14 }, onClick: () => updateCartQty(item.id, item.qty + 1) }, '+'),
+              h('button', { onClick: () => removeFromCart(item.id), style: { color: 'rgba(245,233,216,0.4)', marginLeft: 8 }, 'aria-label': 'Eliminar' }, I.trash(16))
+            )
+          ))
+        ),
+
+        step === 'checkout' && h('div', { className: 'stack-lg' },
+          h('div', { className: 'stack' },
+            h('h3', { className: 'mono-up text-orange', style: { fontSize: 11 } }, 'Datos de envío'),
+            h('input', { className: 'input', placeholder: 'Nombre completo', value: name, onChange: e => setName(e.target.value) }),
+            h('input', { className: 'input', type: 'email', placeholder: 'Correo electrónico', value: email, onChange: e => setEmail(e.target.value) }),
+            h('input', { className: 'input', placeholder: 'Teléfono / WhatsApp', value: phone, onChange: e => setPhone(e.target.value) }),
+            h('input', { className: 'input', placeholder: 'Dirección de envío (o "Recoger en LEK")', value: address, onChange: e => setAddress(e.target.value) })
+          ),
+          h('div', { className: 'stack' },
+            h('h3', { className: 'mono-up text-orange', style: { fontSize: 11 } }, 'Pago seguro'),
+            h('input', { className: 'input', placeholder: 'Número de tarjeta', value: card, onChange: e => setCard(e.target.value) }),
+            h('div', { style: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 } },
+              h('input', { className: 'input', placeholder: 'MM/AA', value: exp, onChange: e => setExp(e.target.value) }),
+              h('input', { className: 'input', placeholder: 'CVC', value: cvc, onChange: e => setCvc(e.target.value) })
+            )
+          )
+        )
+      ),
+
+      h('div', null,
+        h('div', { className: 'price-card', style: { position: 'sticky', top: 100 } },
+          h('h3', { className: 'mono-up text-orange', style: { fontSize: 11, marginBottom: 16 } }, 'Resumen'),
+          h('div', { style: { display: 'flex', justifyContent: 'space-between', fontSize: 13, marginBottom: 8 } },
+            h('span', { className: 'text-muted' }, 'Subtotal'),
+            h('span', { style: { color: '#f5e9d8' } }, fmtCOP(subtotal))
+          ),
+          shipping > 0 && h('div', { style: { display: 'flex', justifyContent: 'space-between', fontSize: 13, marginBottom: 8 } },
+            h('span', { className: 'text-muted' }, 'Envío Bogotá'),
+            h('span', { style: { color: '#f5e9d8' } }, fmtCOP(shipping))
+          ),
+          h('div', { style: { display: 'flex', justifyContent: 'space-between', paddingTop: 16, marginTop: 12, borderTop: '1px solid rgba(245,233,216,0.1)' } },
+            h('span', { className: 'mono-up', style: { fontSize: 11, color: '#f5e9d8' } }, 'Total'),
+            h('span', { className: 'display', style: { fontSize: 22, color: '#f5e9d8' } }, fmtCOP(total))
+          ),
+          step === 'cart'
+            ? h('button', {
+                className: 'btn btn-primary',
+                style: { width: '100%', marginTop: 20 },
+                onClick: () => setStep('checkout')
+              }, 'Continuar al pago', I.arr(14))
+            : h('button', {
+                className: 'btn btn-primary',
+                style: { width: '100%', marginTop: 20 },
+                disabled: processing || !name || !email || !card || !exp || !cvc,
+                onClick: finalize
+              }, processing ? 'Procesando…' : 'Pagar ' + fmtCOP(total)),
+          step === 'checkout' && h('p', { style: { textAlign: 'center', fontSize: 11, color: 'rgba(245,233,216,0.35)', letterSpacing: '0.15em', textTransform: 'uppercase', marginTop: 12 } }, 'Pago seguro · Demo')
+        )
+      )
+    )
+  );
+}
+
+function ShopConfirm({ order, setRoute }) {
+  if (!order) return h('div', { style: { padding: '80px 24px', textAlign: 'center', color: 'rgba(245,233,216,0.6)' } }, 'Sin orden activa.');
+  return h('div', { className: 'container-narrow', style: { padding: '80px 24px', textAlign: 'center' } },
+    h('div', { className: 'check-mark' }, h('span', { style: { color: '#fff', display: 'inline-flex' } }, I.check(28))),
+    h('div', { className: 'eyebrow', style: { display: 'inline-flex', justifyContent: 'center' } }, 'Compra confirmada'),
+    h('h1', { className: 'h1' }, '¡Gracias!'),
+    h('p', { className: 'lead', style: { textAlign: 'center', margin: '24px auto 0' } },
+      'Te enviamos los detalles a ',
+      h('span', { className: 'text-orange' }, order.buyerEmail),
+      '.'
+    ),
+    h('div', { className: 'price-card', style: { marginTop: 48, textAlign: 'left' } },
+      h('div', { style: { display: 'flex', justifyContent: 'space-between', marginBottom: 16 } },
+        h('span', { className: 'mono-up text-muted' }, 'Orden'),
+        h('span', { style: { color: '#f5e9d8' } }, order.id)
+      ),
+      h('div', { className: 'stack', style: { paddingTop: 16, borderTop: '1px solid rgba(245,233,216,0.08)' } },
+        order.items.map(it => h('div', { key: it.id, style: { display: 'flex', justifyContent: 'space-between', fontSize: 13 } },
+          h('span', { className: 'text-muted' }, it.name + ' × ' + it.qty),
+          h('span', { style: { color: '#f5e9d8' } }, fmtCOP(it.price * it.qty))
+        ))
+      ),
+      h('div', { style: { display: 'flex', justifyContent: 'space-between', paddingTop: 16, marginTop: 16, borderTop: '1px solid rgba(245,233,216,0.08)' } },
+        h('span', { className: 'mono-up', style: { fontSize: 11, color: '#f5e9d8' } }, 'Total'),
+        h('span', { className: 'display', style: { fontSize: 22, color: '#f5e9d8' } }, fmtCOP(order.total))
+      )
+    ),
+    h('div', { style: { marginTop: 40, display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' } },
+      h('button', { className: 'btn btn-primary', onClick: () => setRoute('shop') }, 'Seguir comprando'),
+      h('button', { className: 'btn btn-ghost', onClick: () => setRoute('home') }, 'Volver al inicio')
+    )
+  );
+}
+
+/* ===== MENU / RESTOBAR ===== */
+function Menu() {
+  const { menu, cocktails, siteContent } = useApp();
+  const today = new Date().toLocaleDateString('es-CO', { weekday: 'long', day: 'numeric', month: 'long' });
+  const platoDelDia = menu.find(m => m.special) || menu[0];
+  const cocktailDelDia = cocktails.find(c => c.special) || cocktails[0];
+
+  const groupedMenu = menu.filter(m => !m.special).reduce((acc, m) => {
+    if (!acc[m.category]) acc[m.category] = [];
+    acc[m.category].push(m);
+    return acc;
+  }, {});
+
+  return h('div', null,
+    h('div', { className: 'container', style: { padding: '64px 24px 32px' } },
+      h('div', { className: 'sec-head' },
+        h('div', { className: 'eyebrow' }, 'Restobar · La Macarena'),
+        h('h1', { className: 'h1' }, 'Cocina ', h('span', { className: 'serif-i text-gold' }, '& Barra')),
+        h('p', { className: 'lead' }, siteContent.menuIntro || 'Cocina del Pacífico colombiano y sabores afrodiaspóricos.')
+      ),
+      h('div', { style: { display: 'inline-flex', alignItems: 'center', gap: 12, marginTop: 16, padding: '8px 16px', border: '1px solid rgba(234,88,12,0.3)', background: 'rgba(234,88,12,0.05)' } },
+        h('span', { style: { width: 6, height: 6, borderRadius: 3, background: '#ea580c' } }),
+        h('span', { className: 'mono-up', style: { fontSize: 10, color: '#fdba74', textTransform: 'capitalize' } }, today)
+      )
+    ),
+
+    /* Specials of the day */
+    h('div', { className: 'container', style: { padding: '32px 24px 48px' } },
+      h('div', { style: { display: 'grid', gap: 24, gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))' } },
+        [
+          { item: platoDelDia, label: 'Plato del Día' },
+          { item: cocktailDelDia, label: 'Cóctel del Día' }
+        ].map((s, i) => h('div', {
+          key: i,
+          style: {
+            background: '#0d0a08',
+            border: '2px solid #ea580c',
+            position: 'relative',
+            overflow: 'hidden'
+          }
+        },
+          h('div', {
+            style: {
+              position: 'absolute', top: 0, left: 0,
+              background: '#ea580c', color: '#fff',
+              padding: '6px 16px', fontSize: 9, letterSpacing: '0.25em',
+              fontWeight: 600, textTransform: 'uppercase', zIndex: 1
+            }
+          }, '★ ' + s.label),
+          h('div', { style: { aspectRatio: '16/9', overflow: 'hidden' } },
+            h(FoodArt, { item: s.item })
+          ),
+          h('div', { style: { padding: 24 } },
+            h('h3', { className: 'serif', style: { fontSize: 28, color: '#f5e9d8', fontWeight: 700, marginBottom: 8 } }, s.item.name),
+            h('p', { style: { fontSize: 14, color: 'rgba(245,233,216,0.65)', lineHeight: 1.6, marginBottom: 16 } }, s.item.desc),
+            h('div', { className: 'display', style: { fontSize: 24, color: '#ea580c' } }, fmtCOP(s.item.price))
+          )
+        ))
+      )
+    ),
+
+    /* Full menu */
+    h('div', { className: 'container', style: { padding: '48px 24px' } },
+      h('div', { style: { display: 'grid', gap: 64, gridTemplateColumns: '1fr', maxWidth: 1100, margin: '0 auto' } },
+        h('div', null,
+          h('div', { className: 'eyebrow' }, 'La Carta'),
+          h('h2', { className: 'h2', style: { marginBottom: 32 } }, 'Cocina'),
+          Object.entries(groupedMenu).map(([cat, items]) => h('div', { key: cat, style: { marginBottom: 40 } },
+            h('div', { className: 'mono-up text-gold', style: { fontSize: 11, marginBottom: 16, paddingBottom: 10, borderBottom: '1px solid rgba(212,164,71,0.3)' } }, cat),
+            h('div', { className: 'stack-lg' },
+              items.map(it => h('div', { key: it.id, style: { display: 'flex', gap: 16, alignItems: 'flex-start' } },
+                h('div', { style: { width: 80, height: 80, flexShrink: 0, overflow: 'hidden', border: '1px solid rgba(245,233,216,0.08)' } },
+                  h(FoodArt, { item: it })
+                ),
+                h('div', { style: { flex: 1, minWidth: 0 } },
+                  h('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 16, marginBottom: 4 } },
+                    h('h4', { className: 'serif', style: { fontSize: 18, color: '#f5e9d8', fontWeight: 700 } }, it.name),
+                    h('div', { style: { flex: 1, borderBottom: '1px dotted rgba(245,233,216,0.2)', height: 8 } }),
+                    h('span', { className: 'display', style: { fontSize: 16, color: '#ea580c' } }, fmtCOP(it.price))
+                  ),
+                  h('p', { style: { fontSize: 13, color: 'rgba(245,233,216,0.6)', lineHeight: 1.5 } }, it.desc)
+                )
+              ))
+            )
+          ))
+        ),
+
+        h('div', null,
+          h('div', { className: 'eyebrow' }, 'La Barra'),
+          h('h2', { className: 'h2', style: { marginBottom: 32 } }, 'Cócteles'),
+          (() => {
+            const grouped = cocktails.filter(c => !c.special).reduce((acc, c) => {
+              if (!acc[c.category]) acc[c.category] = [];
+              acc[c.category].push(c);
+              return acc;
+            }, {});
+            return Object.entries(grouped).map(([cat, items]) => h('div', { key: cat, style: { marginBottom: 40 } },
+              h('div', { className: 'mono-up text-gold', style: { fontSize: 11, marginBottom: 16, paddingBottom: 10, borderBottom: '1px solid rgba(212,164,71,0.3)' } }, cat),
+              h('div', { className: 'stack-lg' },
+                items.map(it => h('div', { key: it.id, style: { display: 'flex', gap: 16, alignItems: 'flex-start' } },
+                  h('div', { style: { width: 80, height: 80, flexShrink: 0, overflow: 'hidden', border: '1px solid rgba(245,233,216,0.08)' } },
+                    h(FoodArt, { item: it })
+                  ),
+                  h('div', { style: { flex: 1, minWidth: 0 } },
+                    h('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 16, marginBottom: 4 } },
+                      h('h4', { className: 'serif', style: { fontSize: 18, color: '#f5e9d8', fontWeight: 700 } }, it.name),
+                      h('div', { style: { flex: 1, borderBottom: '1px dotted rgba(245,233,216,0.2)', height: 8 } }),
+                      h('span', { className: 'display', style: { fontSize: 16, color: '#ea580c' } }, fmtCOP(it.price))
+                    ),
+                    h('p', { style: { fontSize: 13, color: 'rgba(245,233,216,0.6)', lineHeight: 1.5 } }, it.desc)
+                  )
+                ))
+              )
+            ));
+          })()
+        )
+      ),
+
+      h('div', { style: { marginTop: 80, padding: 32, textAlign: 'center', border: '1px solid rgba(245,233,216,0.1)', maxWidth: 700, margin: '80px auto 0' } },
+        h('div', { className: 'eyebrow', style: { display: 'inline-flex', justifyContent: 'center' } }, 'Reservas'),
+        h('h3', { className: 'serif', style: { fontSize: 28, color: '#f5e9d8', fontWeight: 700, marginBottom: 12 } }, '¿Vienes en grupo?'),
+        h('p', { style: { color: 'rgba(245,233,216,0.65)', marginBottom: 20 } }, 'Reserva mesa para grupos de 6+ personas vía WhatsApp.'),
+        h('a', { href: 'https://wa.me/573001234567', target: '_blank', rel: 'noopener', className: 'btn btn-primary' }, 'Reservar por WhatsApp')
+      )
+    )
+  );
+}
+
 /* ===== ADMIN PANEL ===== */
 function Admin({ setRoute }) {
   const app = useApp();
@@ -1447,6 +2012,10 @@ function Admin({ setRoute }) {
     { id: 'overview', label: 'Resumen' },
     { id: 'events', label: 'Eventos' },
     { id: 'orders', label: 'Reservas' },
+    { id: 'shop', label: 'Tienda' },
+    { id: 'shopOrders', label: 'Ventas' },
+    { id: 'menu', label: 'Menú' },
+    { id: 'cocktails', label: 'Cócteles' },
     { id: 'publications', label: 'Biblioteca' },
     { id: 'content', label: 'Contenido' },
   ];
@@ -1479,6 +2048,10 @@ function Admin({ setRoute }) {
     tab === 'overview' && h(AdminOverview, { app, setTab }),
     tab === 'events' && h(AdminEvents, { app }),
     tab === 'orders' && h(AdminOrders, { app }),
+    tab === 'shop' && h(AdminShop, { app }),
+    tab === 'shopOrders' && h(AdminShopOrders, { app }),
+    tab === 'menu' && h(AdminMenu, { app }),
+    tab === 'cocktails' && h(AdminCocktails, { app }),
     tab === 'publications' && h(AdminPublications, { app }),
     tab === 'content' && h(AdminContent, { app })
   );
@@ -1493,18 +2066,26 @@ function StatCard({ label, value, sub }) {
 }
 
 function AdminOverview({ app, setTab }) {
-  const totalRevenue = app.orders.reduce((s, o) => s + o.total, 0);
+  const eventRevenue = app.orders.reduce((s, o) => s + o.total, 0);
+  const shopRevenue = app.shopOrders.reduce((s, o) => s + o.total, 0);
+  const totalRevenue = eventRevenue + shopRevenue;
   const totalTickets = app.orders.reduce((s, o) => s + o.qty, 0);
   const totalCapacity = app.events.reduce((s, e) => s + e.capacity, 0);
   const totalSold = app.events.reduce((s, e) => s + e.sold, 0);
   const fillRate = totalCapacity > 0 ? Math.round((totalSold / totalCapacity) * 100) : 0;
 
   return h('div', null,
-    h('div', { style: { display: 'grid', gap: 16, gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', marginBottom: 48 } },
-      h(StatCard, { label: 'Ingresos totales', value: fmtCOP(totalRevenue), sub: app.orders.length + ' reservas' }),
-      h(StatCard, { label: 'Boletas vendidas', value: totalTickets, sub: 'En todas las reservas' }),
-      h(StatCard, { label: 'Eventos activos', value: app.events.length, sub: 'Próximos en agenda' }),
+    h('div', { style: { display: 'grid', gap: 16, gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', marginBottom: 32 } },
+      h(StatCard, { label: 'Ingresos totales', value: fmtCOP(totalRevenue), sub: 'Eventos + tienda' }),
+      h(StatCard, { label: 'Ingresos eventos', value: fmtCOP(eventRevenue), sub: app.orders.length + ' reservas' }),
+      h(StatCard, { label: 'Ingresos tienda', value: fmtCOP(shopRevenue), sub: app.shopOrders.length + ' ventas' }),
       h(StatCard, { label: 'Tasa de llenado', value: fillRate + '%', sub: totalSold + ' / ' + totalCapacity + ' cupos' })
+    ),
+    h('div', { style: { display: 'grid', gap: 16, gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', marginBottom: 48 } },
+      h(StatCard, { label: 'Eventos activos', value: app.events.length, sub: 'En agenda' }),
+      h(StatCard, { label: 'Productos', value: app.products.length, sub: 'En catálogo' }),
+      h(StatCard, { label: 'Platos en menú', value: app.menu.length, sub: app.menu.filter(m => m.special).length + ' del día' }),
+      h(StatCard, { label: 'Cócteles', value: app.cocktails.length, sub: app.cocktails.filter(c => c.special).length + ' del día' })
     ),
 
     h('h3', { className: 'mono-up text-orange', style: { fontSize: 11, marginBottom: 16 } }, 'Reservas recientes'),
@@ -1709,6 +2290,199 @@ function AdminPublications({ app }) {
   );
 }
 
+function AdminShop({ app }) {
+  const [editing, setEditing] = useState(null);
+  const [showNew, setShowNew] = useState(false);
+  const blank = { name: '', category: 'Merch', price: 25000, desc: '', stock: 10, color: '#ea580c', featured: false };
+
+  const Form = ({ p, save, cancel, title }) => {
+    const [form, setForm] = useState(p);
+    const upd = (k, v) => setForm(prev => ({ ...prev, [k]: v }));
+    return h('div', { style: { background: 'rgba(245,233,216,0.04)', border: '1px solid #ea580c', padding: 24, marginBottom: 16 } },
+      h('h4', { className: 'mono-up text-orange', style: { fontSize: 11, marginBottom: 20 } }, title),
+      h('div', { style: { display: 'grid', gap: 12 } },
+        h('input', { className: 'input', placeholder: 'Nombre del producto', value: form.name, onChange: e => upd('name', e.target.value) }),
+        h('div', { style: { display: 'grid', gap: 12, gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))' } },
+          h('input', { className: 'input', placeholder: 'Categoría (Merch, Membresía, Música)', value: form.category, onChange: e => upd('category', e.target.value) }),
+          h('input', { className: 'input', type: 'number', placeholder: 'Precio COP', value: form.price, onChange: e => upd('price', parseInt(e.target.value) || 0) }),
+          h('input', { className: 'input', type: 'number', placeholder: 'Stock', value: form.stock, onChange: e => upd('stock', parseInt(e.target.value) || 0) })
+        ),
+        h('textarea', { className: 'input', placeholder: 'Descripción', value: form.desc, onChange: e => upd('desc', e.target.value), rows: 3, style: { resize: 'vertical', fontFamily: 'Inter, sans-serif' } }),
+        h('div', { style: { display: 'grid', gap: 12, gridTemplateColumns: '1fr 1fr' } },
+          h('div', null,
+            h('label', { className: 'mono-up', style: { fontSize: 9, color: 'rgba(234,88,12,0.85)', display: 'block', marginBottom: 6 } }, 'Color visual'),
+            h('input', { type: 'color', value: form.color, onChange: e => upd('color', e.target.value), style: { width: '100%', height: 40, border: '1px solid rgba(245,233,216,0.12)', background: 'transparent' } })
+          ),
+          h('label', { style: { display: 'flex', alignItems: 'center', gap: 8, color: '#f5e9d8', fontSize: 13, alignSelf: 'flex-end' } },
+            h('input', { type: 'checkbox', checked: !!form.featured, onChange: e => upd('featured', e.target.checked) }),
+            'Destacado'
+          )
+        ),
+        h('div', { style: { display: 'flex', gap: 8 } },
+          h('button', { className: 'btn btn-primary', style: { padding: '10px 20px' }, onClick: () => save(form), disabled: !form.name }, 'Guardar'),
+          h('button', { className: 'btn btn-ghost', style: { padding: '10px 20px' }, onClick: cancel }, 'Cancelar')
+        )
+      )
+    );
+  };
+
+  return h('div', null,
+    h('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 } },
+      h('h3', { className: 'mono-up text-orange', style: { fontSize: 11 } }, 'Productos · ' + app.products.length),
+      h('button', { className: 'btn btn-primary', style: { padding: '10px 18px' }, onClick: () => { setEditing(blank); setShowNew(true); } }, '+ Nuevo producto')
+    ),
+    (editing && showNew) && h(Form, {
+      p: editing, title: 'Nuevo producto',
+      save: (p) => { app.addProduct(p); setShowNew(false); setEditing(null); },
+      cancel: () => { setShowNew(false); setEditing(null); }
+    }),
+    h('div', { className: 'stack' },
+      app.products.map(p => editing && editing.id === p.id && !showNew
+        ? h(Form, {
+            key: p.id, p: editing, title: 'Editando: ' + p.name,
+            save: (patch) => { app.updateProduct(p.id, patch); setEditing(null); },
+            cancel: () => setEditing(null)
+          })
+        : h('div', { key: p.id, className: 'order-row', style: { gap: 16 } },
+            h('div', { style: { width: 56, height: 56, flexShrink: 0, overflow: 'hidden', border: '1px solid rgba(245,233,216,0.1)' } },
+              h(ProductArt, { product: p })
+            ),
+            h('div', { style: { flex: 1, minWidth: 0 } },
+              h('div', { className: 'mono-up', style: { fontSize: 9, color: 'rgba(234,88,12,0.85)', marginBottom: 4 } }, p.category, p.featured && ' · ★ destacado'),
+              h('div', { className: 'serif', style: { fontSize: 18, color: '#f5e9d8', fontWeight: 700 } }, p.name),
+              h('div', { className: 'text-muted', style: { fontSize: 12 } }, fmtCOP(p.price) + ' · ' + p.stock + ' en stock')
+            ),
+            h('div', { style: { display: 'flex', gap: 8 } },
+              h('button', { className: 'btn btn-ghost', style: { padding: '8px 14px', fontSize: 10 }, onClick: () => setEditing(p) }, 'Editar'),
+              h('button', { className: 'btn btn-ghost', style: { padding: '8px 14px', fontSize: 10, borderColor: 'rgba(220,38,38,0.4)', color: '#fca5a5' }, onClick: () => { if (confirm('¿Eliminar "' + p.name + '"?')) app.deleteProduct(p.id); } }, 'Eliminar')
+            )
+          )
+      )
+    )
+  );
+}
+
+function AdminShopOrders({ app }) {
+  return h('div', null,
+    h('h3', { className: 'mono-up text-orange', style: { fontSize: 11, marginBottom: 24 } }, 'Ventas de la tienda · ' + app.shopOrders.length),
+    app.shopOrders.length === 0
+      ? h('div', { className: 'empty' }, h('p', { className: 'text-muted' }, 'Aún no hay ventas. Compra desde la tienda para verlo aquí.'))
+      : h('div', { className: 'stack' },
+          app.shopOrders.map(o => h('div', { key: o.id, className: 'order-row', style: { alignItems: 'flex-start', flexWrap: 'wrap', gap: 16 } },
+            h('div', { style: { flex: 1, minWidth: 240 } },
+              h('div', { className: 'mono-up', style: { fontSize: 9, color: 'rgba(234,88,12,0.85)', marginBottom: 6 } }, o.id),
+              h('div', { className: 'serif', style: { fontSize: 17, color: '#f5e9d8', fontWeight: 700, marginBottom: 8 } }, o.buyerName),
+              h('div', { className: 'text-muted', style: { fontSize: 12, marginBottom: 4 } }, o.buyerEmail + ' · ' + (o.buyerPhone || '—')),
+              h('div', { className: 'text-muted', style: { fontSize: 12, marginBottom: 12 } }, o.address),
+              h('div', { style: { paddingTop: 12, borderTop: '1px solid rgba(245,233,216,0.08)', fontSize: 13 } },
+                o.items.map(it => h('div', { key: it.id, style: { display: 'flex', justifyContent: 'space-between', marginBottom: 4 } },
+                  h('span', { className: 'text-muted' }, it.name + ' × ' + it.qty),
+                  h('span', { style: { color: '#f5e9d8' } }, fmtCOP(it.price * it.qty))
+                ))
+              )
+            ),
+            h('div', { style: { textAlign: 'right' } },
+              h('div', { className: 'display', style: { fontSize: 18, color: '#f5e9d8' } }, fmtCOP(o.total)),
+              h('div', { className: 'mono-up', style: { fontSize: 9, color: '#ea580c', marginTop: 4 } }, '✓ ' + o.status)
+            )
+          ))
+        )
+  );
+}
+
+function FoodCRUD({ app, items, addFn, updateFn, deleteFn, label, addLabel, categoryHint, specialLabel }) {
+  const [editing, setEditing] = useState(null);
+  const [showNew, setShowNew] = useState(false);
+  const blank = { name: '', category: '', price: 15000, desc: '', special: false, color: '#ea580c' };
+
+  const Form = ({ p, save, cancel, title }) => {
+    const [form, setForm] = useState(p);
+    const upd = (k, v) => setForm(prev => ({ ...prev, [k]: v }));
+    return h('div', { style: { background: 'rgba(245,233,216,0.04)', border: '1px solid #ea580c', padding: 24, marginBottom: 16 } },
+      h('h4', { className: 'mono-up text-orange', style: { fontSize: 11, marginBottom: 20 } }, title),
+      h('div', { style: { display: 'grid', gap: 12 } },
+        h('input', { className: 'input', placeholder: 'Nombre', value: form.name, onChange: e => upd('name', e.target.value) }),
+        h('div', { style: { display: 'grid', gap: 12, gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))' } },
+          h('input', { className: 'input', placeholder: 'Categoría (' + categoryHint + ')', value: form.category, onChange: e => upd('category', e.target.value) }),
+          h('input', { className: 'input', type: 'number', placeholder: 'Precio COP', value: form.price, onChange: e => upd('price', parseInt(e.target.value) || 0) })
+        ),
+        h('textarea', { className: 'input', placeholder: 'Descripción', value: form.desc, onChange: e => upd('desc', e.target.value), rows: 2, style: { resize: 'vertical', fontFamily: 'Inter, sans-serif' } }),
+        h('div', { style: { display: 'grid', gap: 12, gridTemplateColumns: '1fr 1fr' } },
+          h('div', null,
+            h('label', { className: 'mono-up', style: { fontSize: 9, color: 'rgba(234,88,12,0.85)', display: 'block', marginBottom: 6 } }, 'Color visual'),
+            h('input', { type: 'color', value: form.color, onChange: e => upd('color', e.target.value), style: { width: '100%', height: 40, border: '1px solid rgba(245,233,216,0.12)', background: 'transparent' } })
+          ),
+          h('label', { style: { display: 'flex', alignItems: 'center', gap: 8, color: '#f5e9d8', fontSize: 13, alignSelf: 'flex-end' } },
+            h('input', { type: 'checkbox', checked: !!form.special, onChange: e => upd('special', e.target.checked) }),
+            specialLabel
+          )
+        ),
+        h('div', { style: { display: 'flex', gap: 8 } },
+          h('button', { className: 'btn btn-primary', style: { padding: '10px 20px' }, onClick: () => save(form), disabled: !form.name }, 'Guardar'),
+          h('button', { className: 'btn btn-ghost', style: { padding: '10px 20px' }, onClick: cancel }, 'Cancelar')
+        )
+      )
+    );
+  };
+
+  return h('div', null,
+    h('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 } },
+      h('h3', { className: 'mono-up text-orange', style: { fontSize: 11 } }, label + ' · ' + items.length),
+      h('button', { className: 'btn btn-primary', style: { padding: '10px 18px' }, onClick: () => { setEditing(blank); setShowNew(true); } }, '+ ' + addLabel)
+    ),
+    (editing && showNew) && h(Form, {
+      p: editing, title: 'Nuevo',
+      save: (p) => { addFn(p); setShowNew(false); setEditing(null); },
+      cancel: () => { setShowNew(false); setEditing(null); }
+    }),
+    h('div', { className: 'stack' },
+      items.map(p => editing && editing.id === p.id && !showNew
+        ? h(Form, {
+            key: p.id, p: editing, title: 'Editando: ' + p.name,
+            save: (patch) => { updateFn(p.id, patch); setEditing(null); },
+            cancel: () => setEditing(null)
+          })
+        : h('div', { key: p.id, className: 'order-row', style: { gap: 16 } },
+            h('div', { style: { width: 64, height: 64, flexShrink: 0, overflow: 'hidden', border: '1px solid rgba(245,233,216,0.1)' } },
+              h(FoodArt, { item: p })
+            ),
+            h('div', { style: { flex: 1, minWidth: 0 } },
+              h('div', { className: 'mono-up', style: { fontSize: 9, color: 'rgba(234,88,12,0.85)', marginBottom: 4 } },
+                p.category, p.special && ' · ★ del día'
+              ),
+              h('div', { className: 'serif', style: { fontSize: 17, color: '#f5e9d8', fontWeight: 700 } }, p.name),
+              h('div', { className: 'text-muted', style: { fontSize: 12 } }, fmtCOP(p.price))
+            ),
+            h('div', { style: { display: 'flex', gap: 8 } },
+              h('button', { className: 'btn btn-ghost', style: { padding: '8px 14px', fontSize: 10 }, onClick: () => setEditing(p) }, 'Editar'),
+              h('button', { className: 'btn btn-ghost', style: { padding: '8px 14px', fontSize: 10, borderColor: 'rgba(220,38,38,0.4)', color: '#fca5a5' }, onClick: () => { if (confirm('¿Eliminar "' + p.name + '"?')) deleteFn(p.id); } }, 'Eliminar')
+            )
+          )
+      )
+    )
+  );
+}
+
+function AdminMenu({ app }) {
+  return h(FoodCRUD, {
+    app, items: app.menu,
+    addFn: app.addMenuItem, updateFn: app.updateMenuItem, deleteFn: app.deleteMenuItem,
+    label: 'Platos en menú', addLabel: 'Nuevo plato',
+    categoryHint: 'Plato del día, Para picar, Plato fuerte',
+    specialLabel: '★ Plato del día'
+  });
+}
+
+function AdminCocktails({ app }) {
+  return h(FoodCRUD, {
+    app, items: app.cocktails,
+    addFn: app.addCocktail, updateFn: app.updateCocktail, deleteFn: app.deleteCocktail,
+    label: 'Cócteles en barra', addLabel: 'Nuevo cóctel',
+    categoryHint: 'Cóctel del día, Cerveza, Sin alcohol',
+    specialLabel: '★ Cóctel del día'
+  });
+}
+
 function AdminContent({ app }) {
   const [form, setForm] = useState(app.siteContent);
   const [saved, setSaved] = useState(false);
@@ -1780,7 +2554,11 @@ function App() {
         route === 'about' && h(About),
         route === 'auth' && h(Auth, { setRoute }),
         route === 'account' && h(Account, { setRoute }),
-        route === 'admin' && h(Admin, { setRoute })
+        route === 'admin' && h(Admin, { setRoute }),
+        route === 'shop' && h(Shop, { setRoute }),
+        route === 'cart' && h(Cart, { setRoute, setOrder }),
+        route === 'shopConfirm' && h(ShopConfirm, { order, setRoute }),
+        route === 'menu' && h(Menu)
       ),
       h(Footer, { setRoute })
     )
